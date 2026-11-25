@@ -1,3 +1,5 @@
+# Functions for loading and processing emg data (exclusively)
+
 import os
 import csv
 import numpy as np
@@ -165,7 +167,9 @@ def rms_sliding_window_emg(emg_data: list, window_size: int, sampling_frequency:
             else:
                 values = np.asarray(values)
                 # moving average of the squared signal, then sqrt -> RMS
-                mean_square = np.convolve(values**2, kernel, mode="same")
+                # ensure same shape as input! edge effects don't really matter here,
+                # but timing does (sync to video/pose data)
+                mean_square = np.convolve(values**2, kernel, mode="same") # "same" ensure same shape as input
                 filtered_data[key] = np.sqrt(mean_square[:n_out])
 
         emg_data_filtered.append(filtered_data)

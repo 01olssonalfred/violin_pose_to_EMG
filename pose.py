@@ -1,3 +1,5 @@
+# Functions for loading and processing pose data (exclusively)
+
 import os
 import csv
 import re
